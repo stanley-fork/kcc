@@ -702,7 +702,8 @@ def render_page(vector):
 
             for i in range(seg_from, seg_to):  # work through our page segment
                 page = doc[i]
-                mat = target_height / page.rect.height
+                zoom = target_height / page.rect.height
+                mat = pymupdf.Matrix(zoom, zoom)
                 # TODO: decide colorspace earlier so later color check is cheaper.
                 pix = page.get_pixmap(matrix=mat, colorspace='RGB', alpha=False)
                 pix.save(os.path.join(output_dir, "p-%i.png" % i))
@@ -794,10 +795,13 @@ def mupdf_pdf_process_pages_parallel(filename, output_dir, target_height):
     print("Starting %i processes for '%s'." % (cpu, filename))
 
     try:
-        with Pool(processes=cpu_count()-1) as pool:
+        start = perf_counter()
+        with Pool() as pool:
             results = pool.map(
                 render_page if render else extract_page, vectors
             )
+        end = perf_counter()
+        print(f"MuPDF: {end - start} sec")
     except Exception as e:
         raise UserWarning(f"Error while processing PDF pages: {e}")
 
