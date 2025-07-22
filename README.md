@@ -94,7 +94,7 @@ The `c2e` and `c2p` versions are command line tools for power users.
 
 On Windows 11, you may need to run in compatibility mode for an older Windows version.
 
-On Mac, right click open to get past the security warning.
+On Mac, right click open to get past the security warning. macOS 12 Monterey or later is required, you can use https://dortania.github.io/OpenCore-Legacy-Patcher/ to get a newer macOS on unsupported hardware.
 
 For flatpak, Docker, and AppImage versions, refer to the wiki: https://github.com/ciromattia/kcc/wiki/Installation
 
@@ -102,7 +102,7 @@ For flatpak, Docker, and AppImage versions, refer to the wiki: https://github.co
 - Should I use Calibre?
   - No. Calibre doesn't properly support fixed layout EPUB/MOBI, so modifying KCC output in Calibre will break the formatting.
     Viewing KCC output in Calibre will also not work properly.
-    On 7th gen and later Kindles running firmware 5.16.3+, you can get cover thumbnails simply by USB dropping into documents folder.
+    On 7th gen and later Kindles running firmware 5.15.1+, you can get cover thumbnails simply by USB dropping into documents folder.
     On 6th gen and older, you can get cover thumbnails by keeping Kindle plugged in during conversion.
     If you are careful to not modify the file however, you can still use Calibre, but direct USB dropping is reccomended.
 - All options have additional information in tooltips if you hover over the option.
