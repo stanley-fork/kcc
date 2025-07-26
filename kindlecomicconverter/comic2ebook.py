@@ -126,9 +126,10 @@ def buildHTML(path, imgfile, imgfilepath, imgfile2=None):
                   "</head>\n",
                   "<body style=\"" + additionalStyle + "\">\n",
                   "<div style=\"text-align:center;top:" + getTopMargin(deviceres, imgsizeframe) + "%;\">\n",
-                  # this display none div fixes formatting issues with virtual panel mode, for some reason
-                  '<div style="display:none;">.</div>\n',
     ])
+    if options.iskindle:
+        # this display none div fixes formatting issues with virtual panel mode, for some reason
+        f.write('<div style="display:none;">.</div>\n')
     f.write(f'<img width="{imgsize[0]}" height="{imgsize[1]}" src="{"../" * backref}Images/{postfix}{imgfile}"/>\n')
     if imgfile2:
         f.write(f'<img width="{imgsize2[0]}" height="{imgsize2[1]}" src="{"../" * backref}Images/{postfix}{imgfile2}"/>\n')
@@ -1051,8 +1052,8 @@ def chunk_directory(path):
     level = -1
     for root, _, files in os.walk(os.path.join(path, 'OEBPS', 'Images')):
         for f in files:
-            # Windows MAX_LENGTH = 260 plus some buffer
-            if len(os.path.join(root, f)) > 180:
+            # Windows MAX_LEN = 260 plus some buffer
+            if os.name == 'nt' and len(os.path.join(root, f)) > 180:
                 flattenTree(os.path.join(path, 'OEBPS', 'Images'))
                 level = 1
                 break               
