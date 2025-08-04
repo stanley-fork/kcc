@@ -44,7 +44,7 @@ from html import escape as hescape
 import pymupdf
 import numpy as np
 
-from .shared import getImageFileName, walkSort, walkLevel, sanitizeTrace, subprocess_run
+from .shared import getImageFileName, walkSort, walkLevel, sanitizeTrace, subprocess_run, dot_clean
 from .comicarchive import SEVENZIP, available_archive_tools
 from . import comic2panel
 from . import image
@@ -1041,13 +1041,6 @@ def sanitizePermissions(filetree):
     dot_clean(filetree)
 
 
-def dot_clean(filetree):
-    for root, _, files in os.walk(filetree, topdown=False):
-        for name in files:
-            if name.startswith('._'):
-                os.remove(os.path.join(root, name))
-
-
 def chunk_directory(path):
     level = -1
     for root, _, files in os.walk(os.path.join(path, 'OEBPS', 'Images')):
@@ -1498,7 +1491,7 @@ def makeBook(source, qtgui=None):
         imgDirectoryProcessing(os.path.join(path, "OEBPS", "Images"))
     if GUI:
         GUI.progressBarTick.emit('1')
-    if options.batchsplit > 0:
+    if options.batchsplit > 0 or options.targetsize:
         tomes = chunk_directory(path)
     else:
         tomes = [path]
@@ -1573,7 +1566,7 @@ def makeBook(source, qtgui=None):
         if os.path.isfile(source):
             os.remove(source)
         elif os.path.isdir(source):
-            rmtree(source)
+            rmtree(source, True)
 
     end = perf_counter()
     print(f"makeBook: {end - start} seconds")
