@@ -104,13 +104,16 @@ For flatpak, Docker, and AppImage versions, refer to the wiki: https://github.co
 
 ## FAQ
 - Should I use Calibre?
-  - No. Calibre doesn't properly support fixed layout EPUB/MOBI, so modifying KCC output in Calibre will break the formatting.
+  - No. Calibre doesn't properly support fixed layout EPUB/MOBI, so modifying KCC output (even just metadata!) in Calibre will break the formatting.
     Viewing KCC output in Calibre will also not work properly.
     On 7th gen and later Kindles running firmware 5.15.1+, you can get cover thumbnails simply by USB dropping into documents folder.
     On 6th gen and older, you can get cover thumbnails by keeping Kindle plugged in during conversion.
     If you are careful to not modify the file however, you can still use Calibre, but direct USB dropping is reccomended.
+- Blank pages?
+  - May happen when [using PNG with Kindle Scribe](https://github.com/ciromattia/kcc/issues/665) or [any format with a Kindle Colorsoft](https://github.com/ciromattia/kcc/issues/768). Solve by using JPG with Kindle Scribe or buying a Kobo Colour. Happens more often when turning pages really fast.
+    Going back a few pages and exiting and re-entering book should fix it temporarily.
 - What output format should I use?
-  - MOBI for Kindles. CBZ for Kindle DX. CBZ for Koreader. KEPUB for Kobo.
+  - MOBI for Kindles. CBZ for Kindle DX. CBZ for Koreader. KEPUB for Kobo. PDF for ReMarkable.
 - All options have additional information in tooltips if you hover over the option.
 - To get the converted book onto your Kindle/Kobo, just drag and drop the mobi/kepub into the documents folder on your Kindle/Kobo via USB
 - Right to left mode not working?
