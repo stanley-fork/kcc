@@ -23,7 +23,7 @@ import sys
 from argparse import ArgumentParser
 from shutil import rmtree, copytree, move
 from multiprocessing import Pool
-from PIL import Image, ImageChops, ImageOps, ImageDraw
+from PIL import Image, ImageChops, ImageOps, ImageDraw, ImageFilter
 from .shared import dot_clean, getImageFileName, walkLevel, walkSort, sanitizeTrace
 
 
@@ -101,7 +101,9 @@ def splitImage(work):
         Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
         Image.MAX_IMAGE_PIXELS = 1000000000
         imgOrg = Image.open(filePath).convert('RGB')
-        imgProcess = Image.open(filePath).convert('1')
+        # I experimented with setting dither=None, but got very poor results
+        # The default dither is good
+        imgProcess = Image.open(filePath).filter(ImageFilter.FIND_EDGES).convert('1')
         widthImg, heightImg = imgOrg.size
         if heightImg > opt.height:
             if opt.debug:
@@ -271,6 +273,7 @@ def main(argv=None, qtgui=None):
                         splitWorkerPool.apply_async(func=splitImage, args=(i, ), callback=splitImageTick)
                     splitWorkerPool.close()
                     splitWorkerPool.join()
+                    dot_clean(targetDir)
                     if GUI and not GUI.conversionAlive:
                         rmtree(targetDir, True)
                         raise UserWarning("Conversion interrupted.")
@@ -283,7 +286,7 @@ def main(argv=None, qtgui=None):
                         move(targetDir, sourceDir)
                 else:
                     rmtree(targetDir, True)
-                    raise UserWarning("Source directory is empty.")
+                    raise UserWarning("C2P: Source directory is empty.")
             else:
                 raise UserWarning("Provided input is not a directory.")
     else:
