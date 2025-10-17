@@ -21,9 +21,8 @@
 import os
 import sys
 from argparse import ArgumentParser
-from shutil import rmtree, copytree, move
+from shutil import rmtree
 from multiprocessing import Pool
-from time import perf_counter
 from PIL import Image, ImageChops, ImageOps, ImageDraw, ImageFilter
 from PIL.Image import Dither
 from .shared import dot_clean, getImageFileName, walkLevel, walkSort, sanitizeTrace
@@ -103,15 +102,9 @@ def splitImage(work):
         Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
         Image.MAX_IMAGE_PIXELS = 1000000000
         imgOrg = Image.open(filePath).convert('RGB')
-        start = perf_counter()
         imgEdges = Image.open(filePath).convert('L').filter(ImageFilter.FIND_EDGES)
-        end = perf_counter()
-        print(f"webtoon: imgEdges {end - start} sec")
-        start = perf_counter()
-        # the threshold of 8 is conservative. 0-6 are definitely not edges
-        imgProcess = imgEdges.point(lambda p: 255 if p > 8 else 0).convert('1', dither=Dither.NONE)
-        end = perf_counter()
-        print(f"webtoon: imgProcess {end - start} sec")
+        # threshold of 8 is too high. 5 is too low.
+        imgProcess = imgEdges.point(lambda p: 255 if p > 6 else 0).convert('1', dither=Dither.NONE)
 
         widthImg, heightImg = imgOrg.size
         if heightImg > opt.height:
@@ -124,7 +117,8 @@ def splitImage(work):
             panelDetected = False
             panels = []
             while yWork < heightImg:
-                tmpImg = imgProcess.crop((4, yWork, widthImg-4, yWork + 4))
+                edge = int(widthImg * .05)
+                tmpImg = imgProcess.crop((edge, yWork, widthImg-edge, yWork + 4))
                 solid = detectSolid(tmpImg)
                 if not solid and not panelDetected:
                     panelDetected = True
@@ -233,7 +227,7 @@ def main(argv=None, qtgui=None):
             targetDir = sourceDir + "-Splitted"
             if os.path.isdir(sourceDir):
                 rmtree(targetDir, True)
-                copytree(sourceDir, targetDir)
+                os.renames(sourceDir, targetDir)
                 work = []
                 pagenumber = 1
                 splitWorkerOutput = []
@@ -291,8 +285,7 @@ def main(argv=None, qtgui=None):
                         raise RuntimeError("One of workers crashed. Cause: " + splitWorkerOutput[0][0],
                                            splitWorkerOutput[0][1])
                     if args.inPlace:
-                        rmtree(sourceDir, True)
-                        move(targetDir, sourceDir)
+                        os.renames(targetDir, sourceDir)
                 else:
                     rmtree(targetDir, True)
                     raise UserWarning("C2P: Source directory is empty.")
