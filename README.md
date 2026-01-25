@@ -14,6 +14,8 @@ with proper fixed layout support.
 Supported input formats include JPG/PNG image files in folders, archives, or PDFs.
 Supported output formats include MOBI/AZW3, EPUB, KEPUB, CBZ, and PDF.
 
+**WARNING**: Kindle Scribe 2025 support may not be possible. Does not work well currently.
+
 **NEW**: PDF output is now supported for direct conversion to reMarkable devices! 
 When using a reMarkable profile (Rmk1, Rmk2, RmkPP), the format automatically defaults to PDF 
 for optimal compatibility with your device's native PDF reader.
@@ -238,6 +240,7 @@ MAIN:
 
 PROCESSING:
   -n, --noprocessing    Do not modify image and ignore any profile or processing option
+  --pdfextract          Use legacy PDF image extraction method from KCC 8 and earlier.
   -u, --upscale         Resize images smaller than device's resolution
   -s, --stretch         Stretch images to device's resolution
   -r SPLITTER, --splitter SPLITTER
