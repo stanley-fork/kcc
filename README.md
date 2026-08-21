@@ -47,8 +47,6 @@ Then all your usb loaded comic files will show up next to all your normal books 
 
 **WARNING**: Kindle Scribe 2025 MOBI support may have blank pages. Use PDF instead.
 
-Overall, KCC avoids many [common Kindle Store manga formatting issues](https://github.com/ciromattia/kcc/wiki/Kindle-Store-bad-formatting).
-
 The GUI looks like this, built in Qt6. There are a lot of options, but most people only care about the ones checked below:
 
 ![image](settings.png)
