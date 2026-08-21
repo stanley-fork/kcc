@@ -2,8 +2,6 @@ Most manga conversion methods for ereaders add margins. But KCC enables true ful
 
 <img src="header_margins.jpeg" alt="Header Image">
 
-(feat. Ya Boy Kongming! [Humble Bundle](https://humblebundleinc.sjv.io/xL6Zv1) PDF source.)
-
 # KCC
 
 [![GitHub release](https://img.shields.io/github/release/ciromattia/kcc.svg)](https://github.com/ciromattia/kcc/releases)
