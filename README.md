@@ -43,6 +43,8 @@ https://github.com/user-attachments/assets/da73d625-e082-482d-91a4-ae4765e96fd7
 
 Then all your usb loaded comic files will show up next to all your normal books in your ereader library!
 
+The final result looks incredible on my 10" Kindle Scribe: https://www.youtube.com/watch?v=2CIHW2N9Enc
+
 **WARNING**: Kindle Scribe 2025 MOBI support may have blank pages. Use PDF instead.
 
 The GUI looks like this, built in Qt6. There are a lot of options, but most people only care about the ones checked below:
