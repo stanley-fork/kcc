@@ -30,7 +30,7 @@ KCC's main goal is maximum image quality at significantly smaller file size. For
 
 <img src="black.jpeg" alt="Black level">
 
-2) fixes the rainbow effect on Kaleido 3 color eink without blur:
+2) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur:
 
 <img src="rainbow.jpeg" alt="Rainbow">
 
