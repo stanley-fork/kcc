@@ -2,6 +2,8 @@ Most manga conversion methods for ereaders add margins. But KCC enables true ful
 
 <img src="header_margins.jpeg" alt="Header Image">
 
+(feat. Ya Boy Kongming! [Humble Bundle](https://humblebundleinc.sjv.io/xL6Zv1) PDF source.)
+
 # KCC
 
 [![GitHub release](https://img.shields.io/github/release/ciromattia/kcc.svg)](https://github.com/ciromattia/kcc/releases)
@@ -32,6 +34,8 @@ KCC's main goal is maximum image quality at significantly smaller file size. For
 2) fixes black levels to avoid gray/faded blacks found in many Kindle Store manga
 
 <img src="black.jpeg" alt="Black level">
+
+(feat. Fire Force)
 
 3) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur:
 
