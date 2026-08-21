@@ -35,7 +35,7 @@ KCC's main goal is maximum image quality at significantly smaller file size. For
 
 3) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur:
 
-<img src="rainbow.jpeg" alt="Rainbow">
+<img src="rainbow2.jpeg" alt="Rainbow">
 
 Just drop your input files into the KCC window, hit convert, and USB drop the output files onto your device's `documents` folder!
 
