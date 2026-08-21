@@ -61,6 +61,8 @@ YouTube tutorial (please subscribe): https://www.youtube.com/watch?v=QQ6zJcMF2Iw
 
 Installation tutorial: https://www.youtube.com/watch?v=IR2Fhcm9658
 
+Semi automatically merge pre-split 2-page spreads tutorial: https://www.youtube.com/watch?v=kfIX67f7Aqk
+
 ## Kindle Jailbreak for KOreader
 
 Jailbreaking to use KOreader is optional. KCC works just fine with the native mobi manga viewer.
