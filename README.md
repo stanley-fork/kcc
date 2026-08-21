@@ -26,18 +26,18 @@ The PDFs are often x12000 resolution or better, basically print quality.
 
 KCC's main goal is maximum image quality at significantly smaller file size. For example, KCC
 
-1) fixes black levels to avoid gray/faded blacks found in many Kindle Store manga
-
-<img src="black.jpeg" alt="Black level">
-
-2) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur:
-
-<img src="rainbow.jpeg" alt="Rainbow">
-
-3) can compress a 600 MB manga volume from Humble Bundle to 100 MB.
+1) can compress a 600 MB manga volume from Humble Bundle to 100 MB.
    This is mostly accomplished by downscaling to the native resolution of your specific device.
    This can also improve battery life, page turn speed, and general performance
    on underpowered ereaders with small memory and storage capacities.
+
+2) fixes black levels to avoid gray/faded blacks found in many Kindle Store manga
+
+<img src="black.jpeg" alt="Black level">
+
+3) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur:
+
+<img src="rainbow.jpeg" alt="Rainbow">
 
 Just drop your input files into the KCC window, hit convert, and USB drop the output files onto your device's `documents` folder!
 
