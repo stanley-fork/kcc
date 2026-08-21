@@ -49,9 +49,9 @@ Then all your usb loaded comic files will show up next to all your normal books 
 
 Overall, KCC avoids many [common Kindle Store manga formatting issues](https://github.com/ciromattia/kcc/wiki/Kindle-Store-bad-formatting).
 
-The GUI looks like this, built in Qt6, with my most commonly used settings:
+The GUI looks like this, built in Qt6. There are a lot of options, but most people only care about the ones checked below:
 
-![image](https://github.com/user-attachments/assets/36ad2131-6677-4559-bd6f-314a90c27218)
+![image](settings.png)
 
 Simply drag and drop your files/folders into the KCC window, 
 adjust your settings (hover over each option to see details in a tooltip), 
