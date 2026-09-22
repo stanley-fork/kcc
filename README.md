@@ -33,7 +33,7 @@ KCC's main goal is maximum image quality at significantly smaller file size. For
 
 2) fixes black levels to avoid gray/faded blacks found in many Kindle Store manga
 
-![black](images/black720.jpeg)
+![black](images/blacktext.jpeg)
 
 3) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur:
 
@@ -286,7 +286,8 @@ MAIN:
   --invertdirection     Invert page turn direction
   -q, --hq              Try to increase the quality of magnification
   -2, --two-panel       Display two not four panels in Panel View mode
-  --vertical4panel       Show side panels first in virtual panel view
+  --vertical4panel      Show side panels first in virtual panel view
+  --legacypanelview     Use legacy panel view method from KCC 6
   -w, --webtoon         Webtoon processing mode
   --ts TARGETSIZE, --targetsize TARGETSIZE
                         the maximal size of output file in MB. [Default=100MB for webtoon and 400MB for others]
@@ -397,7 +398,7 @@ If you want to edit the `.ui` files, use `pyside6-designer` which is included in
 If new objects have been added, verify that correct tab order has been applied by using [Tab Order Editing Mode](https://doc.qt.io/qt-6/designer-tab-order.html).
 Then use the `gen_ui_files` scripts to autogenerate the python UI.
 
-An example PR adding a new checkbox is here: https://github.com/ciromattia/kcc/pull/785
+An example PR adding a new checkbox is here: https://github.com/ciromattia/kcc/pull/1445
 
 video of adding a new checkbox: https://youtu.be/g3I8DU74C7g
 
