@@ -125,7 +125,7 @@ class ProfileData:
         'KoAH2O': ("Kobo Aura H2O", (1080, 1430), Palette16, 1.0),
         'KoAO': ("Kobo Aura ONE", (1404, 1872), Palette16, 1.0),
         'KoN': ("Kobo Nia", (758, 1024), Palette16, 1.0),
-        'KoC': ("Kobo Clara HD/Kobo Clara 2E", (1072, 1448), Palette16, 1.0),
+        'KoC': ("Kobo Clara HD/Kobo Clara 2E/Kobo Clara BW", (1072, 1448), Palette16, 1.0),
         'KoCC': ("Kobo Clara Colour", (1072, 1448), Palette16, 1.0),
         'KoL': ("Kobo Libra H2O/Kobo Libra 2", (1264, 1680), Palette16, 1.0),
         'KoLC': ("Kobo Libra Colour", (1264, 1680), Palette16, 1.0),
@@ -420,9 +420,12 @@ class ComicPage:
         if self.opt.hq:
             self.size = (int(self.size[0] * 1.5), int(self.size[1] * 1.5))
         self.original_color_mode = image.mode
-        # TODO: color check earlier
-        self.image = image.convert("RGB")
+        self.image = image
         self.color = colorCheck(self.image, self.original_color_mode, self.opt)
+        if self.color:
+            self.image = self.image.convert('RGB')
+        else:
+            self.image = self.image.convert('L')
         self.colorOutput = self.color and self.opt.forcecolor
         self.page_background_color = page_background_color
         self.fill = fill
