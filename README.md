@@ -42,7 +42,7 @@ KCC's main goal is maximum image quality at significantly smaller file size. For
 
 4) can [semi-automatically detect 2-page spreads](https://www.youtube.com/watch?v=kfIX67f7Aqk) from pre-split single pages:
 
-![before](images/spreadbefore720.jpeg)
+![before](images/joinorder.jpeg)
 
 You can view combined spreads either rotated or not:
 
@@ -166,6 +166,8 @@ For flatpak, Docker, and AppImage versions, refer to the wiki: https://github.co
 - To get the converted book onto your Kindle/Kobo, just drag and drop the mobi/kepub into the documents folder on your Kindle/Kobo via USB
 - Kindle panel view not working?
   - Virtual panel view is enabled in Aa menu on your Kindle, not in KCC as of 7.4
+- No page turn animation on Kindle MOBI?
+  - Use legacy panel view option. Or enable page turn animation in a normal book and then come back to the mobi.
 - Right to left mode not working?
   - RTL mode only affects splitting order for CBZ output. Your cbz reader itself sets the page turn direction.
 - Colors inverted?
