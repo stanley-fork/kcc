@@ -442,7 +442,7 @@ class WorkerThread(QThread):
                 if options.output is None:
                     options.output = fusion_source_parent
                 currentJobs.clear()
-                job, fusion_cover_path = comic2ebook.makeFusion(bookDir)
+                job, fusion_cover_path = comic2ebook.makeFusion(bookDir, self)
                 currentJobs.append(job)
                 MW.addMessage.emit(i18n.tr_arg(QCoreApplication.translate('KCCGUI', 'Created fusion at %1'), currentJobs[0]), 'info', False)
             except Exception as e:
@@ -1568,6 +1568,9 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
                              'DefaultUpscale': True, 'ForceColor': False, 'Label': 'KPW34'},
             "Kindle Voyage": {'PVOptions': True, 'ForceExpert': False, 'DefaultFormat': 0,
                               'DefaultUpscale': True, 'ForceColor': False, 'Label': 'KV'},
+            "Kindle 1440x1920": {
+                'PVOptions': True, 'ForceExpert': False, 'DefaultFormat': 0, 'DefaultUpscale': False, 'ForceColor': False, 'Label': 'K1920',
+            },
             "Kindle 1860x1920": {
                 'PVOptions': True, 'ForceExpert': False, 'DefaultFormat': 0, 'DefaultUpscale': False, 'ForceColor': False, 'Label': 'KS1860',
             },
@@ -1704,6 +1707,7 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
             "Kindle 1920x1920",
             "Kindle 1860x1920",
             "Kindle 1240x1860",
+            "Kindle 1440x1920",
             "Separator",
             "Kobo Aura",
             "Kobo Aura ONE",
