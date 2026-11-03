@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 import itertools
 import json
 from pathlib import Path
+import platform
 from PySide6.QtCore import (QSize, QUrl, Qt, Signal, QIODeviceBase, QEvent, QThread, QSettings,
                             QCoreApplication, QT_TRANSLATE_NOOP, QObject)
 from PySide6.QtGui import (QActionGroup, QColor, QIcon, QImage, QKeyEvent, QPixmap, QDesktopServices)
@@ -1481,7 +1482,10 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
         APP = kccapp
         MW = kccwindow
         GUI = self
-        self.settings = QSettings('ciromattia', 'kcc10')
+        settings_key = 'kcc10'
+        if platform.system() == 'Darwin' and platform.machine() == 'x86_64':
+            settings_key += '-intel'
+        self.settings = QSettings('ciromattia', settings_key)
         self.language = str(self.settings.value('language', i18n.DEFAULT_LANGUAGE))
         self.language = i18n.apply_language(self.language)
         self.setupUi(MW)
@@ -1509,7 +1513,8 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
         default_options = {'gammaSlider': 0, 'croppingBox': 2, 'croppingPowerSlider': 100, 'rotateBox': 1, 'mangaBox': 2}
         try:
             self.options = self.settings.value('options', default_options)
-        except Exception:
+        except Exception as e:
+            print(e)
             self.options = default_options
         self.worker = WorkerThread()
         self.worker.setObjectName('worker')
