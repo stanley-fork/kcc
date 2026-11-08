@@ -43,8 +43,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          # new enough to not worry about emudhra
-          python-version: 3.13.17
+          python-version: 3.14
+          check-latest: true
           cache: 'pip'
       - name: Install dependencies
         env:
@@ -53,6 +53,7 @@ jobs:
           python -m pip install --upgrade pip certifi
           pip install -r ${{ matrix.requirements }}
           pip install pyinstaller --no-binary pyinstaller
+          python -c "from PySide6.QtWidgets import QStyleFactory;print(QStyleFactory.keys())"
       - name: build binary
         run: |
           python setup.py ${{ matrix.command }}

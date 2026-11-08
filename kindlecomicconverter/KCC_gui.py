@@ -23,7 +23,7 @@ import json
 from pathlib import Path
 import platform
 from PySide6.QtCore import (QSize, QUrl, Qt, Signal, QIODeviceBase, QEvent, QThread, QSettings,
-                            QCoreApplication, QT_TRANSLATE_NOOP, QObject)
+                            QCoreApplication, QT_TRANSLATE_NOOP, QObject, qVersion)
 from PySide6.QtGui import (QActionGroup, QColor, QIcon, QImage, QKeyEvent, QPixmap, QDesktopServices)
 from PySide6.QtWidgets import (QApplication, QDialogButtonBox, QHBoxLayout, QLabel, QListWidgetItem, QMainWindow, QSizePolicy, QSystemTrayIcon, QFileDialog, QMessageBox, QDialog, QAbstractItemView, QListView, QTreeView, QWidget,
                                QToolButton, QMenu)
@@ -50,7 +50,7 @@ from .KCC_spread_label import LabelSpreadsDialog
 from .shared import HTMLStripper, sanitizeTrace, walkLevel
 from .image import ProfileData
 from .comicarchive import SEVENZIP, TAR, available_archive_tools
-from .comic2ebook import OS_SORT_KEY, KF7_KINDLES, flattenTree, getWorkFolder, removeNonImages, sanitizeTree, detectKindleGen
+from .comic2ebook import KOBO_TOUCH_DRIVER_REGEX, OS_SORT_KEY, KF7_KINDLES, flattenTree, getWorkFolder, removeNonImages, sanitizeTree, detectKindleGen
 from . import __version__
 from . import i18n
 from . import comic2ebook
@@ -466,11 +466,6 @@ class WorkerThread(QThread):
             except Exception as e:
                 print('Fusion Failed. ' + str(e))
                 MW.addMessage.emit(i18n.tr_arg(QCoreApplication.translate('KCCGUI', 'Fusion Failed. %1'), str(e)), 'error', True)
-        elif len(currentJobs) > 1 and options.title != 'defaulttitle':
-            currentJobs.clear()
-            error_message = QCoreApplication.translate('KCCGUI', 'Process Failed. Custom title can\'t be set when processing more than 1 source.\nDid you forget to check fusion?')
-            print(error_message)
-            MW.addMessage.emit(error_message, 'error', True)
         for i, job in enumerate(currentJobs, start=1):
             job_progress_number = f'[{i}/{len(currentJobs)}] '
             sleep(0.5)
@@ -495,6 +490,8 @@ class WorkerThread(QThread):
             jobargv.append(job)
             try:
                 comic2ebook.options = comic2ebook.checkOptions(copy(options))
+                if len(currentJobs) > 1 and comic2ebook.options.title != 'defaulttitle':
+                    comic2ebook.options.title += f' {i:0{len(str(len(currentJobs)))}}'
                 outputPath = comic2ebook.makeBook(job, fusion_cover_path, self, job_progress_number)
                 MW.hideProgressBar.emit()
             except UserWarning as warn:
@@ -1338,18 +1335,21 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
             self.conversionAlive = False
             self.worker.sync()
         else:
+            parent = Path(self.jobList.item(0).text()).parent
+            name = parent.name
+            if GUI.deviceBox.currentText().startswith('Kobo') and GUI.formatBox.currentText() == 'EPUB':
+                name = KOBO_TOUCH_DRIVER_REGEX.sub('_', name)
+
             if QApplication.keyboardModifiers() == Qt.KeyboardModifier.ShiftModifier:
                 if not self.selectOutputFolder():
                     return
             elif GUI.defaultOutputFolderBox.checkState() == Qt.CheckState.PartiallyChecked:
-                parent = Path(self.jobList.item(0).text()).parent
-                target_path = parent.joinpath(f"{parent.name} [kcc]")
+                target_path = parent.joinpath(f"{name} [kcc]")
                 if not target_path.exists():
                     target_path.mkdir()
                 self.targetDirectory = str(target_path)
             elif GUI.defaultOutputFolderBox.isChecked():
-                parent = Path(self.jobList.item(0).text()).parent
-                self.targetDirectory = os.path.join(self.defaultOutputFolder, f"{parent.name} [kcc]")
+                self.targetDirectory = os.path.join(self.defaultOutputFolder, f"{name} [kcc]")
             else:
                 GUI.targetDirectory = ''
             self.progress.start()
@@ -1503,9 +1503,9 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
         APP = kccapp
         MW = kccwindow
         GUI = self
-        settings_key = 'kcc10'
-        if platform.system() == 'Darwin' and platform.machine() == 'x86_64':
-            settings_key += '-intel'
+        settings_key = 'kcc13'
+        if Version(qVersion()) <= Version('6.4.3'):
+            settings_key += '-legacy'
         self.settings = QSettings('ciromattia', settings_key)
         self.language = str(self.settings.value('language', i18n.DEFAULT_LANGUAGE))
         self.language = i18n.apply_language(self.language)
@@ -1557,6 +1557,7 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
             self.p = Process(os.getpid())
             self.p.nice(BELOW_NORMAL_PRIORITY_CLASS)
             self.p.ionice(1)
+            APP.setStyle('windowsvista')
         elif sys.platform.startswith('linux'):
             APP.setStyle('fusion')
             if self.windowSize == '0x0':
