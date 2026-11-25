@@ -24,6 +24,11 @@ import sys
 from argparse import ArgumentParser
 from shutil import rmtree
 from multiprocessing import Pool
+from packaging.version import Version
+from PIL import __version__ as pillowVersion
+if Version(pillowVersion) < Version('11.3.0'):
+    import pillow_avif
+import pillow_jxl
 from PIL import Image, ImageChops, ImageOps, ImageDraw, ImageFilter, ImageFile
 from PIL.Image import Dither
 from .shared import dot_clean, getImageFileName, walkLevel, walkSort, sanitizeTrace
